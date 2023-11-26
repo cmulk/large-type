@@ -14,8 +14,8 @@ window.addEventListener('DOMContentLoaded', function() {
 
     function updateFragment(text) {
         // Don't spam the browser history & strip query strings.
-        window.location.replace(location.origin + '/#' + encodeURIComponent(text));
-        shareLinkField.value = location.origin + '/' + location.hash;
+        window.location.replace(location.origin + '/text/#' + encodeURIComponent(text));
+        shareLinkField.value = location.origin + '/text/' + location.hash;
     }
 
     function updateTitle(text) {
