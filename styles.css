@@ -163,7 +163,7 @@ input::-webkit-input-placeholder {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     color: #aaa;
-    content: counter(num-chars);
+    /* content: counter(num-chars); */
     display: block;
     font-size: 1.5vw;
     text-align: center;
@@ -171,17 +171,17 @@ input::-webkit-input-placeholder {
 }
 
 .about {
-    animation-delay: 2s;
+    /* animation-delay: 2s;
     animation-duration: 1.5s;
     animation-fill-mode: forwards;
     animation-iteration-count: 1;
     animation-name: fade-in;
-    animation-timing-function: ease;
+    animation-timing-function: ease; */
     bottom: 10px;
     display: block;
     font-family: sans-serif;
     left: 0;
-    opacity: 0;
+    /* opacity: 0; */
     position: absolute;
     text-align: center;
     width: 100%;

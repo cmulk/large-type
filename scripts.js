@@ -1,7 +1,7 @@
 window.addEventListener('DOMContentLoaded', function() {
     "use strict";
 
-    var WELCOME_MSG = '*hello*';
+    var WELCOME_MSG = '';
 
     var mainDiv = document.querySelector('.main');
     var textDiv = document.querySelector('.text');
@@ -15,7 +15,7 @@ window.addEventListener('DOMContentLoaded', function() {
     function updateFragment(text) {
         // Don't spam the browser history & strip query strings.
         window.location.replace(location.origin + '/text/#' + encodeURIComponent(text));
-        shareLinkField.value = location.origin + '/text/' + location.hash;
+        // shareLinkField.value = location.origin + '/text/' + location.hash;
     }
 
     function updateTitle(text) {
@@ -35,7 +35,7 @@ window.addEventListener('DOMContentLoaded', function() {
     function renderText() {
         // Return a space as typing indicator if text is empty.
         var text = decodeURIComponent(location.hash.split('#')[1] || ' ');
-        var fontSize = Math.min(150 / text.length, 30);
+        var fontSize = Math.min(180 / text.length, 50);
 
         clearChars();
 
@@ -64,10 +64,10 @@ window.addEventListener('DOMContentLoaded', function() {
             text = '';
         }
 
-        // Don't jump the cursor to the end
-        if (inputField.value !== text) {
-            inputField.value = text;
-        }
+        // // Don't jump the cursor to the end
+        // if (inputField.value !== text) {
+        //     inputField.value = text;
+        // }
         updateFragment(text);
         updateTitle(text);
     }
@@ -144,22 +144,22 @@ window.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    document.querySelector('.js-help-button').addEventListener('click', function(evt) {
-        evt.preventDefault();
-        showModal('.js-help-modal');
-    }, false);
+    // document.querySelector('.js-help-button').addEventListener('click', function(evt) {
+    //     evt.preventDefault();
+    //     showModal('.js-help-modal');
+    // }, false);
 
-    document.querySelector('.js-share-button').addEventListener('click', function(evt) {
-        evt.preventDefault();
-        showModal('.js-share-modal');
+    // document.querySelector('.js-share-button').addEventListener('click', function(evt) {
+    //     evt.preventDefault();
+    //     showModal('.js-share-modal');
 
-        // Don't pop up the keyboard on mobile
-        if (!isMobile) {
-            shareLinkField.select();
-        }
-    }, false);
+    //     // Don't pop up the keyboard on mobile
+    //     if (!isMobile) {
+    //         shareLinkField.select();
+    //     }
+    // }, false);
 
-    inputField.addEventListener('input', onInput, false);
+    // inputField.addEventListener('input', onInput, false);
     textDiv.addEventListener('click', enterInputMode, false);
     window.addEventListener('keypress', enterInputMode, false);
     window.addEventListener('hashchange', renderText, false);
