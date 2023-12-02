@@ -1,8 +1,7 @@
-window.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('DOMContentLoaded', function () {
     "use strict";
 
     var WELCOME_MSG = '';
-    var BASE_PATH = "/display";
 
     var textDiv = document.querySelector('.text');
     var inputField = document.querySelector('.inputbox');
@@ -12,7 +11,14 @@ window.addEventListener('DOMContentLoaded', function() {
 
 
     function fetchCode() {
-        fetch('/code')
+        var urlParams = new URLSearchParams(window.location.search);
+        var displayname = urlParams.get('displayname');
+
+        var url = '/code';
+        if (displayname) {
+            url += '?displayname=' + displayname;
+        }
+        fetch(url)
             .then(response => response.json())
             .then(data => {
                 updateFragment(data.code);
@@ -26,7 +32,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
     function updateFragment(text) {
         // Don't spam the browser history & strip query strings.
-        window.location.replace(location.origin + BASE_PATH + '/#' + encodeURIComponent(text));
+        window.location.replace(location.origin + location.pathname + '#' + encodeURIComponent(text));
     }
 
     function updateTitle(text) {
@@ -50,7 +56,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
         clearChars();
 
-        text.split(/.*?/u).forEach(function(chr) {
+        text.split(/.*?/u).forEach(function (chr) {
             var charbox = charboxTemplate.content.cloneNode(true);
             var charElem = charbox.querySelector('.char');
             charElem.style.fontSize = fontSize + 'vw';
