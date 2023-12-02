@@ -99,7 +99,7 @@ window.addEventListener('DOMContentLoaded', function () {
     var displayname = urlParams.get('displayname');
     if (displayname) {
         // set display_name cookie valid for 10 days
-        document.cookie = "display_name=" + displayname + "; path=/; max-age=864000";
+        document.cookie = "display_name=" + displayname + "; path=/; max-age=31536000";
     }
     fetchCode();
     renderText();
