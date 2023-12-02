@@ -11,14 +11,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
 
     function fetchCode() {
-        var urlParams = new URLSearchParams(window.location.search);
-        var displayname = urlParams.get('displayname');
-
-        var url = '/code';
-        if (displayname) {
-            url += '?displayname=' + displayname;
-        }
-        fetch(url)
+        fetch('/code')
             .then(response => response.json())
             .then(data => {
                 updateFragment(data.code);
@@ -98,10 +91,16 @@ window.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('keypress', enterInputMode, false);
     window.addEventListener('hashchange', renderText, false);
 
-    if (!location.hash) {
-        updateFragment(WELCOME_MSG);
-    }
+    // if (!location.hash) {
+    //     updateFragment(WELCOME_MSG);
+    // }
 
+    var urlParams = new URLSearchParams(window.location.search);
+    var displayname = urlParams.get('displayname');
+    if (displayname) {
+        // set display_name cookie valid for 10 days
+        document.cookie = "display_name=" + displayname + "; path=/; max-age=864000";
+    }
     fetchCode();
     renderText();
     this.setInterval(fetchCode, 5000);
