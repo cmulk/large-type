@@ -75,12 +75,13 @@ input::-webkit-input-placeholder {
 
 .main {
     align-items: center;
-    color: #222;
+    color: #f33a3a;
     display: flex;
     flex-direction: row;
     height: 100%;
     justify-content: center;
     width: 100%;
+    background: black;
 }
 
 .blurred {
@@ -125,8 +126,6 @@ input::-webkit-input-placeholder {
 
 .text {
     border-radius: 10px;
-    border: 1px solid #eee;
-    box-shadow: 10px 10px 50px 5px #aaa;
     counter-reset: num-chars;
     overflow: hidden;
 }
@@ -138,22 +137,6 @@ input::-webkit-input-placeholder {
     float: left;
     font-family: monospace;
     font-size: 10vw;
-}
-
-.text li .number {
-    color: #456cad;
-}
-
-.text li .symbol {
-    color: #b94669;
-}
-
-.text li:nth-child(odd) {
-    background: white;
-}
-
-.text li:nth-child(even) {
-    background: #f7f7f7;
 }
 
 .text li::after {
@@ -187,11 +170,11 @@ input::-webkit-input-placeholder {
     width: 100%;
     font-size: 1em;
     font-weight: lighter;
-    color: #999;
+    color: #99999969;
 }
 
 .about a {
-    color: #666;
+    color: #99999969;
 }
 
 @media only screen and (max-width: 700px) {
