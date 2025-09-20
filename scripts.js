@@ -23,6 +23,44 @@ window.addEventListener('DOMContentLoaded', function () {
             });
     }
 
+    // Function to establish and manage a WebSocket connection for real-time updates
+    function connectWebSocket() {
+        // Determine the WebSocket protocol based on the current page's protocol
+        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        // Construct the WebSocket URL using the current host and '/ws' endpoint
+        const wsUrl = `${protocol}//${window.location.host}/ws`;
+
+        // Create a new WebSocket connection
+        const socket = new WebSocket(wsUrl);
+
+        // Handle incoming messages from the WebSocket
+        socket.onmessage = function (event) {
+            // Parse the received JSON data
+            const data = JSON.parse(event.data);
+            // If the message is a code update, update the display
+            if (data.type === 'code_update') {
+                updateFragment(data.code);
+                renderText();
+                console.log('Display updated via WebSocket:', data.code);
+            }
+        };
+
+        // Handle WebSocket connection closure
+        socket.onclose = function () {
+            console.log('WebSocket connection closed, reconnecting...');
+            // Attempt to reconnect after a 1-second delay
+            setTimeout(connectWebSocket, 1000);
+        };
+
+        // Handle WebSocket errors
+        socket.onerror = function (error) {
+            console.error('WebSocket error:', error);
+        };
+
+        // Return the socket for potential further use
+        return socket;
+    }
+
     function updateFragment(text) {
         // Don't spam the browser history & strip query strings.
         window.location.replace(location.origin + location.pathname + '#' + encodeURIComponent(text));
@@ -103,5 +141,5 @@ window.addEventListener('DOMContentLoaded', function () {
     }
     fetchCode();
     renderText();
-    this.setInterval(fetchCode, 5000);
+    connectWebSocket(); // Connect to WebSocket for real-time updates
 });
