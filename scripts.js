@@ -15,6 +15,7 @@ window.addEventListener('DOMContentLoaded', function () {
             .then(response => response.json())
             .then(data => {
                 updateFragment(data.code);
+                connectWebSocket();
                 // console.log(code);
             })
             .catch(error => {
@@ -141,5 +142,5 @@ window.addEventListener('DOMContentLoaded', function () {
     }
     fetchCode();
     renderText();
-    connectWebSocket(); // Connect to WebSocket for real-time updates
+    // connectWebSocket(); // Connect to WebSocket for real-time updates
 });
