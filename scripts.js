@@ -8,20 +8,20 @@ window.addEventListener('DOMContentLoaded', function () {
     var charboxTemplate = document.querySelector('#charbox-template');
     var defaultTitle = document.querySelector("title").innerText;
 
+    function generateUUID() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0,
+                v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
 
-
-    function fetchCode() {
-        fetch('/code')
-            .then(response => response.json())
-            .then(data => {
-                updateFragment(data.code);
-                connectWebSocket();
-                // console.log(code);
-            })
-            .catch(error => {
-                // Handle any errors
-                console.error(error);
-            });
+    function setClientIdCookie() {
+        const exists = document.cookie.split(';').some(cookie => cookie.trim().startsWith('client_id='));
+        if (!exists) {
+            const uuid = generateUUID();
+            document.cookie = `client_id=${uuid}; max-age=31536000; path=/`;
+        }
     }
 
     // Function to establish and manage a WebSocket connection for real-time updates
@@ -29,7 +29,7 @@ window.addEventListener('DOMContentLoaded', function () {
         // Determine the WebSocket protocol based on the current page's protocol
         const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
         // Construct the WebSocket URL using the current host and '/ws' endpoint
-        const wsUrl = `${protocol}//${window.location.host}/ws`;
+        const wsUrl = `${protocol}//${window.location.host}/ws/display`;
 
         // Create a new WebSocket connection
         const socket = new WebSocket(wsUrl);
@@ -140,7 +140,7 @@ window.addEventListener('DOMContentLoaded', function () {
         // set display_name cookie valid for 10 days
         document.cookie = "display_name=" + displayname + "; path=/; max-age=31536000";
     }
-    fetchCode();
+    setClientIdCookie();
+    connectWebSocket();
     renderText();
-    // connectWebSocket(); // Connect to WebSocket for real-time updates
 });
