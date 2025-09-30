@@ -9,6 +9,16 @@ window.addEventListener('DOMContentLoaded', function () {
     var defaultTitle = document.querySelector("title").innerText;
 
     function generateUUID() {
+        // Try crypto.randomUUID() first, fall back to custom implementation
+        try {
+            if (crypto.randomUUID) {
+                return crypto.randomUUID();
+            }
+        } catch (e) {
+            // Fall back to custom implementation
+        }
+        
+        // Fallback implementation for non-HTTPS or older browsers
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
             var r = Math.random() * 16 | 0,
                 v = c == 'x' ? r : (r & 0x3 | 0x8);
