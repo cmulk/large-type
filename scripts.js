@@ -17,7 +17,7 @@ window.addEventListener('DOMContentLoaded', function () {
         } catch (e) {
             // Fall back to custom implementation
         }
-        
+
         // Fallback implementation for non-HTTPS or older browsers
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
             var r = Math.random() * 16 | 0,
