@@ -34,6 +34,9 @@ window.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    let reconnectDelay = 1000;
+    const maxReconnectDelay = 30000;
+
     // Function to establish and manage a WebSocket connection for real-time updates
     function connectWebSocket() {
         // Determine the WebSocket protocol based on the current page's protocol
@@ -43,6 +46,11 @@ window.addEventListener('DOMContentLoaded', function () {
 
         // Create a new WebSocket connection
         const socket = new WebSocket(wsUrl);
+
+        socket.onopen = function () {
+            console.log('WebSocket connected');
+            reconnectDelay = 1000; // Reset delay on successful connection
+        };
 
         // Handle incoming messages from the WebSocket
         socket.onmessage = function (event) {
@@ -58,9 +66,9 @@ window.addEventListener('DOMContentLoaded', function () {
 
         // Handle WebSocket connection closure
         socket.onclose = function () {
-            console.log('WebSocket connection closed, reconnecting...');
-            // Attempt to reconnect after a 1-second delay
-            setTimeout(connectWebSocket, 1000);
+            console.log(`WebSocket connection closed, reconnecting in ${reconnectDelay}ms...`);
+            setTimeout(connectWebSocket, reconnectDelay);
+            reconnectDelay = Math.min(reconnectDelay * 2, maxReconnectDelay);
         };
 
         // Handle WebSocket errors
